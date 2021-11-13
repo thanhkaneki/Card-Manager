@@ -28,6 +28,11 @@ public class User {
     @JoinColumn(name = "status", referencedColumnName = "id")
     private Status status;
 
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private UserInfo userInfo;
+
     public Long getId() {
         return id;
     }
@@ -59,11 +64,28 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
 }
 /*CREATE TABLE Users(
 	ID int not null primary key,
     UserName nvarchar(25) not null,
     Password nvarchar(25) not null,
     Status int not null,
-    foreign key (Status) references Status(ID) on update cascade on delete cascade
+    Info_ID int not null,
+    foreign key (Status) references Status(ID) on update cascade on delete cascade,
+    foreign key (Info_ID) references UserInfo(ID) on update cascade on delete cascade
 );*/
