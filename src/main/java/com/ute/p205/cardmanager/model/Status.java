@@ -3,7 +3,7 @@ package com.ute.p205.cardmanager.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Status")
+@Table(name = "status")
 public class Status {
     @Id
     @Column(name = "ID")

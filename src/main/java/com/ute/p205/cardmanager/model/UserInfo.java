@@ -3,12 +3,12 @@ package com.ute.p205.cardmanager.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER_INFO")
+@Table(name = "user_info")
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "USER_ID")
-    private int id;
+    @Column(name = "user_id")
+    private long id;
 
     @OneToOne
     @MapsId
@@ -31,10 +31,10 @@ public class UserInfo {
         this.phone = phone;
         this.address = address;
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public User getUser() {
@@ -62,6 +62,7 @@ public class UserInfo {
         this.address = address;
     }
 
+    @Override
     public String toString(){
         if(userName == null)
             userName = null;
@@ -76,10 +77,10 @@ public class UserInfo {
 }
 /**
  * CREATE TABLE user_info(
- id INT FOREIGN KEY (ID_USER) REFERENCES USERS(ID)  ON DELETE CASCADE  ON UPDATE CASCADE,
+ id long FOREIGN KEY (ID_USER) REFERENCES USERS(ID)  ON DELETE CASCADE  ON UPDATE CASCADE,
  name CHAR(30) NOT NULL,
- address CHAR(30) CONSTRAINT diachi NOT NULL ,
- phone INT CONSTRAINT PHONE NOT NULL,
+ address CHAR(30) CONSTRAlong diachi NOT NULL ,
+ phone long CONSTRAlong PHONE NOT NULL,
  PRIMARY KEY(ID_USER)
  )
  */

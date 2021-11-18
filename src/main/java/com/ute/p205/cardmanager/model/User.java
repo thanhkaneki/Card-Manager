@@ -1,5 +1,7 @@
 package com.ute.p205.cardmanager.model;
 
+import org.hibernate.annotations.Immutable;
+
 import javax.persistence.*;
 import java.util.Set;
 
