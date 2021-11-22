@@ -1,9 +1,9 @@
 package com.ute.p205.cardmanager.service;
 
-import com.ute.p205.cardmanager.model.Role;
-import com.ute.p205.cardmanager.model.User;
-import com.ute.p205.cardmanager.model.UserDto;
-import com.ute.p205.cardmanager.repository.UserRepository;
+import com.ute.p205.cardmanager.model.SysAccount;
+import com.ute.p205.cardmanager.model.SysAccountDTO;
+import com.ute.p205.cardmanager.model.SysRole;
+import com.ute.p205.cardmanager.repository.SysAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,28 +19,28 @@ import java.util.Set;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
-    UserRepository userRepository;
+    SysAccountRepository sysAccountRepository;
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        User user = userRepository.findByUsername(username);
-        if(user == null){
+        SysAccount acc = sysAccountRepository.findByUsername(username);
+        if(acc == null){
             throw new UsernameNotFoundException("User not found");
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        Set<Role> roles = user.getRoles();
+        Set<SysRole> roles = acc.getSysRoles();
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(), grantedAuthorities
+                acc.getUsername(), acc.getPassword(), grantedAuthorities
         );
     }
-    public User save(UserDto user) {
-        User newUser = new User();
+    public SysAccount save(SysAccountDTO user) {
+        SysAccount newUser = new SysAccount();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        return userRepository.save(newUser);
+        return sysAccountRepository.save(newUser);
     }
 }

@@ -3,7 +3,7 @@ package com.ute.p205.cardmanager.controller;
 import com.ute.p205.cardmanager.config.JwtTokenUtil;
 import com.ute.p205.cardmanager.model.JwtRequest;
 import com.ute.p205.cardmanager.model.JwtResponse;
-import com.ute.p205.cardmanager.model.UserDto;
+import com.ute.p205.cardmanager.model.SysAccountDTO;
 import com.ute.p205.cardmanager.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +41,7 @@ public class JwtAuthenticationController {
 	//json
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
+	public ResponseEntity<?> saveUser(@RequestBody SysAccountDTO user) throws Exception {
 		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 
