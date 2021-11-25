@@ -1,18 +1,17 @@
 package com.ute.p205.cardmanager.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "SysAccount")
-@Getter @Setter
+@Data
 public class SysAccount {
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "UserName")
@@ -22,15 +21,19 @@ public class SysAccount {
 
     @ManyToMany
     @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "User_ID"),
+            name = "SysAccount_SysRole",
+            joinColumns = @JoinColumn(name = "Acc_ID"),
             inverseJoinColumns = @JoinColumn(name = "Role_ID")
     )
     private Set<SysRole> sysRoles;
 
     @OneToOne
-    @JoinColumn(name = "status", referencedColumnName = "id")
+    @JoinColumn(name = "Status_id", referencedColumnName = "id")
     private SysStatus sysStatus;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sysAccount")
+    @PrimaryKeyJoinColumn
+    private Set<BankAccount> listBankAccounts = new HashSet<>();
 }
 /*
 CREATE TABLE SysAccount(

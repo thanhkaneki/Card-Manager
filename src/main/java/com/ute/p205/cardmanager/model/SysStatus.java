@@ -1,20 +1,21 @@
 package com.ute.p205.cardmanager.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "SysStatus")
-@Getter @Setter
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class SysStatus {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     @Column(name = "Status")
-    private String status;
+    @NonNull private String status;
 
     @OneToOne(mappedBy = "sysStatus")
     private SysAccount sysAccount;

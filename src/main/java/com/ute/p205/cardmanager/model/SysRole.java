@@ -1,5 +1,6 @@
 package com.ute.p205.cardmanager.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,19 +8,19 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "roles")
-@Getter @Setter
+@Table(name = "SysRoles")
+@Data
 public class SysRole {
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "Role")
     private String role;
 
     @ManyToMany(mappedBy = "sysRoles")
-    private Set<SysAccount> users;
+    private Set<SysAccount> accounts;
 
     public SysRole(){};
     public SysRole(String role) {
