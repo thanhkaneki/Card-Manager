@@ -1,31 +1,28 @@
 package com.ute.p205.cardmanager.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "SysRoles")
-@Data
-public class SysRole {
+@Table(name = "Roles")
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Getter @Setter
+public class Role {
     @Id
     @Column(name = "ID")
     @GeneratedValue
     private Long id;
 
-    @Column(name = "Role")
-    private String role;
+    @Column(name = "Role", unique = true, nullable = false)
+    @NonNull private String role;
 
     @ManyToMany(mappedBy = "sysRoles")
-    private Set<SysAccount> accounts;
+    private Set<Customer> accounts = new HashSet<>();
 
-    public SysRole(){};
-    public SysRole(String role) {
-        this.role = role;
-    }
 }
 /*CREATE TABLE SysRoles(
 	ID int NOT NULL PRIMARY KEY,

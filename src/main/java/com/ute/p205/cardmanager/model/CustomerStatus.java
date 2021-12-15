@@ -5,11 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "SysStatus")
-@Data
+@Table(name = "CustomerStatus")
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class SysStatus {
+@Getter @Setter
+public class CustomerStatus {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -17,8 +17,8 @@ public class SysStatus {
     @Column(name = "Status")
     @NonNull private String status;
 
-    @OneToOne(mappedBy = "sysStatus")
-    private SysAccount sysAccount;
+    @OneToOne(mappedBy = "customerStatus")
+    private Customer customer;
 }
 /*
 CREATE TABLE SysStatus(

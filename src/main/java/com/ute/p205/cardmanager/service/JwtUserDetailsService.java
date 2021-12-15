@@ -1,9 +1,9 @@
 package com.ute.p205.cardmanager.service;
 
-import com.ute.p205.cardmanager.model.SysAccount;
-import com.ute.p205.cardmanager.model.SysAccountDTO;
-import com.ute.p205.cardmanager.model.SysRole;
-import com.ute.p205.cardmanager.repository.SysAccountRepository;
+import com.ute.p205.cardmanager.model.Customer;
+import com.ute.p205.cardmanager.model.CustomerDTO;
+import com.ute.p205.cardmanager.model.Role;
+import com.ute.p205.cardmanager.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,28 +19,28 @@ import java.util.Set;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     @Autowired
-    SysAccountRepository sysAccountRepository;
+    CustomerRepository CustomerRepository;
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        SysAccount acc = sysAccountRepository.findByUsername(username);
+        Customer acc = CustomerRepository.findByUsername(username);
         if(acc == null){
             throw new UsernameNotFoundException("User not found");
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        Set<SysRole> roles = acc.getSysRoles();
+        Set<Role> roles = acc.getSysRoles();
 
         return new org.springframework.security.core.userdetails.User(
                 acc.getUsername(), acc.getPassword(), grantedAuthorities
         );
     }
-    public SysAccount save(SysAccountDTO user) {
-        SysAccount newUser = new SysAccount();
+    public Customer save(CustomerDTO user) {
+        Customer newUser = new Customer();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        return sysAccountRepository.save(newUser);
+        return CustomerRepository.save(newUser);
     }
 }

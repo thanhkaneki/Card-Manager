@@ -10,4 +10,6 @@ public class EmployeeController {
     public String getEmployees() {
         return "Welcome!";
     }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String Wellcome(){ return "home";}
 }
