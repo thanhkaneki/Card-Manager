@@ -8,26 +8,43 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Scanner;
 
 @Component
 public class DataSeedingListener implements CommandLineRunner {
     @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private CustomerStatusRepository CustomerStatusRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerInfoRepository customerInfoRepository;
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private AccountStatusRepository accountStatusRepository;
+    @Autowired
+    private AccountTypeRepository accountTypeRepository;
 
-    private Date date;
+    @Autowired
+    private CardRepository cardRepository;
+    @Autowired
+    private CardTypeRepository cardTypeRepository;
+    @Autowired
+    private CardStatusRepository cardStatusRepository;
+    @Autowired
+    private LimitCreditCardRepository limitCreditCardRepository;
+
+    @Autowired
+    private TypeOfMoneyRepository typeOfMoneyRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -45,8 +62,123 @@ public class DataSeedingListener implements CommandLineRunner {
         if (CustomerStatusRepository.findByStatus("active") == null) {
             CustomerStatusRepository.save(new CustomerStatus("active"));
         }
+        // Type of money
+        if (typeOfMoneyRepository.findTypeOfMoneyByName("VND") == null){
+            typeOfMoneyRepository.save(new TypeOfMoney("VND", "Viet Nam Dong"));
+        }
+        if (typeOfMoneyRepository.findTypeOfMoneyByName("USD") == null){
+            typeOfMoneyRepository.save(new TypeOfMoney("USD", "United States Dollar"));
+        }
+        if(accountStatusRepository.findByName("Active") == null)
+            accountStatusRepository.save(new AccountStatus("Active"));
+        if (accountTypeRepository.findByName("Basic") == null)
+            accountTypeRepository.save(new AccountType("Basic"));
+        // Bank Account
+        String urlAcc = "E:\\TMDT\\data\\accountNumber.txt";
+        FileInputStream fileInputStream = new FileInputStream(urlAcc);
+        Scanner scanner = new Scanner(fileInputStream);
 
-        // Admin account
+        try {
+            AccountType accountType = accountTypeRepository.findByName("Basic");
+            AccountStatus accountStatus = accountStatusRepository.findByName("Active");
+            while (scanner.hasNextLine()) {
+                String number = scanner.nextLine();
+                String date = scanner.nextLine();
+                String money = scanner.nextLine();
+                if(accountRepository.findByNumber(number) == null){
+                    Account account = new Account(number, date, money);
+                    account.setAccountType(accountType);
+                    account.setAccountStatus(accountStatus);
+                    accountRepository.save(account);
+                }
+            }
+        } finally {
+            try {
+                scanner.close();
+                fileInputStream.close();
+            } catch (IOException ex) {
+                System.out.print(ex);
+            }
+        }
+        // Type of card
+        if (cardTypeRepository.findByName("Visa_Credit") == null)
+            cardTypeRepository.save(new CardType("Visa_Credit"));
+        if (cardTypeRepository.findByName("Visa_Debit") == null)
+            cardTypeRepository.save(new CardType("Visa_Debit"));
+        if (cardTypeRepository.findByName("Local_Credit") == null)
+            cardTypeRepository.save(new CardType("Local_Credit"));
+        if (cardTypeRepository.findByName("Local_Debit") == null)
+            cardTypeRepository.save(new CardType("Local_Debit"));
+        // Status of Card
+        if (cardStatusRepository.findByName("Active") == null)
+            cardStatusRepository.save(new CardStatus("Active"));
+        if (cardStatusRepository.findByName("Block") == null)
+            cardStatusRepository.save(new CardStatus("Block"));
+        if (cardStatusRepository.findByName("Linked") == null)
+            cardStatusRepository.save(new CardStatus("Linked"));
+        if (cardStatusRepository.findByName("NotLink") == null)
+            cardStatusRepository.save(new CardStatus("NotLink"));
+        // Limit of credit card
+        if (limitCreditCardRepository.findByLimitMoney("10000000") == null) {
+            LimitCreditCard limitCreditCard = new LimitCreditCard("10000000");
+            TypeOfMoney typeOfMoney = typeOfMoneyRepository.findTypeOfMoneyByName("VND");
+            limitCreditCard.setTypeOfMoney(typeOfMoney);
+            limitCreditCardRepository.save(limitCreditCard);
+        }
+        if (limitCreditCardRepository.findByLimitMoney("20000000") == null) {
+            LimitCreditCard limitCreditCard = new LimitCreditCard("20000000");
+            TypeOfMoney typeOfMoney = typeOfMoneyRepository.findTypeOfMoneyByName("VND");
+            limitCreditCard.setTypeOfMoney(typeOfMoney);
+            limitCreditCardRepository.save(limitCreditCard);
+        }
+        if (limitCreditCardRepository.findByLimitMoney("50000000") == null) {
+            LimitCreditCard limitCreditCard = new LimitCreditCard("50000000");
+            TypeOfMoney typeOfMoney = typeOfMoneyRepository.findTypeOfMoneyByName("VND");
+            limitCreditCard.setTypeOfMoney(typeOfMoney);
+            limitCreditCardRepository.save(limitCreditCard);
+        }
+        if (limitCreditCardRepository.findByLimitMoney("100000000") == null) {
+            LimitCreditCard limitCreditCard = new LimitCreditCard("100000000");
+            TypeOfMoney typeOfMoney = typeOfMoneyRepository.findTypeOfMoneyByName("VND");
+            limitCreditCard.setTypeOfMoney(typeOfMoney);
+            limitCreditCardRepository.save(limitCreditCard);
+        }
+        // list visa card
+        String urlVisa = "E:\\TMDT\\data\\visaFull.txt";
+        FileInputStream fileInputStreamVisa = new FileInputStream(urlVisa);
+        Scanner scanner2 = new Scanner(fileInputStreamVisa);
+
+        try {
+            CardType cardType = cardTypeRepository.findByName("Visa_Credit");
+            CardType cardType2 = cardTypeRepository.findByName("Visa_Debit");
+            CardStatus cardStatus = cardStatusRepository.findByName("NotLink");
+            LimitCreditCard limitCreditCard = limitCreditCardRepository.findByLimitMoney("10000000");
+            int i = 0;
+            while (scanner2.hasNextLine()) {
+                String number = scanner2.nextLine();
+                String validate = scanner2.nextLine();
+                String exdate = scanner2.nextLine();
+                if(cardRepository.findCardByNumber(number) == null){
+                    Card card = new Card(number, validate, exdate);
+//                    if (i < 50)
+//                       card.setCardType(cardType);
+//                    else
+//                        card.setCardType(cardType2);
+                    card.setCardType(i++ < 50 ? cardType:cardType2);
+                    card.setCardStatus(cardStatus);
+                    card.setLimitCreditCard(limitCreditCard);
+                    cardRepository.save(card);
+                }
+            }
+        } finally {
+            try {
+                scanner2.close();
+                fileInputStream.close();
+            } catch (IOException ex) {
+                System.out.print(ex);
+            }
+        }
+        // Customer
         if (customerRepository.findByUsername("admin") == null) {
             Customer admin = new Customer();
             admin.setUsername("admin");
@@ -57,30 +189,11 @@ public class DataSeedingListener implements CommandLineRunner {
             admin.setSysRoles(roles);
             CustomerStatus customerStatus = CustomerStatusRepository.findByStatus("active");
             admin.setCustomerStatus(customerStatus);
+            CustomerInfo customerInfo = new CustomerInfo("Dat", "Nguyen", "A1-14-02, Hiep Binh Chanh, Thu Duc"
+                    , "241647708", "2014-05-02", " ", "0989542812","datnguyen2847@gmail.com");
+            customerInfo.setCustomer(admin);
+            admin.setCustomerInfo(customerInfo);
             customerRepository.save(admin);
         }
-        /*if  (accountRepository.findByNumber("123456789") == null){
-            Account bankAccount = new Account("123456789");
-            Customer Customer = CustomerRepository.findByUsername("admin");
-            bankAccount.setCustomer(Customer);
-            long time = System.currentTimeMillis();
-            date = new Date(time);
-            bankAccount.setOpenDate(date);
-            accountRepository.save(bankAccount);
-        }
-        if  (accountRepository.findByNumber("987654321") == null){
-            Account bankAccount = new Account("987654321");
-            long time = System.currentTimeMillis();
-            date = new Date(time);
-            bankAccount.setOpenDate(date);
-            accountRepository.save(bankAccount);
-        }
-        if  (accountRepository.findByNumber("789879798") == null){
-            Account bankAccount = new Account("789879798");
-            long time = System.currentTimeMillis();
-            date = new Date(time);
-            bankAccount.setOpenDate(date);
-            accountRepository.save(bankAccount);
-        }*/
     }
 }

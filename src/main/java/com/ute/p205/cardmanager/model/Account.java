@@ -20,10 +20,10 @@ public class Account {
     @NonNull private String number;
 
     @Column(name = "OpenDate" , nullable = false)
-    private Date openDate;
+    @NonNull private String openDate;
 
     @Column(name = "Balance")
-    private String balance;
+    @NonNull private String balance;
 
     @ManyToOne
     @JoinColumn(name = "type_id", nullable = false)

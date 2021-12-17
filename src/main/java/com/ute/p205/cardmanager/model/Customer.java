@@ -35,6 +35,10 @@ public class Customer {
     @JoinColumn(name = "Status_id", referencedColumnName = "id")
     private CustomerStatus customerStatus;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private CustomerInfo customerInfo;
+
   /*  @OneToMany(mappedBy = "Customer", cascade = CascadeType.ALL)
     //@PrimaryKeyJoinColumn fetch = FetchType.LAZY,
     private Set<Account> listBankAccounts = new HashSet<>();

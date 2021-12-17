@@ -1,34 +1,41 @@
 package com.ute.p205.cardmanager.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CustomerInfo")
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 public class CustomerInfo {
     @Id
     @Column(name = "Customer_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "ID")
+    @JoinColumn(name = "Customer_ID")
     private Customer customer;
 
     @Column(name = "FirstName", nullable = false)
-    private  String firstName;
+    @NonNull private  String firstName;
     @Column(name = "LastName", nullable = false)
-    private String lastName;
+    @NonNull private String lastName;
     @Column(name = "Address", nullable = false)
-    private String address;
+    @NonNull private String address;
+    @Column(name = "PassPort_ID")
+    @NonNull private String passPortOrID;
+    @Column(name = "ValiDate")
+    @NonNull private String valiDate;
+    @Column(name = "ExpiryDate")
+    @NonNull private String expiryDate;
     @Column(name = "PhoneNumber", unique = true, nullable = false)
-    private String phoneNumber;
+    @NonNull private String phoneNumber;
+    @Column(name = "Email")
+    @NonNull private String email;
+
 }
 /*CREATE TABLE SysAccountInfo(
 	User_ID int not null primary key,
