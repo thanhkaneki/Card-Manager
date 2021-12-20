@@ -2,7 +2,9 @@ package com.ute.p205.cardmanager.service;
 
 import com.ute.p205.cardmanager.model.Customer;
 import com.ute.p205.cardmanager.model.CustomerDTO;
+import com.ute.p205.cardmanager.model.CustomerInfo;
 import com.ute.p205.cardmanager.model.Role;
+import com.ute.p205.cardmanager.repository.CustomerInfoRepository;
 import com.ute.p205.cardmanager.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
