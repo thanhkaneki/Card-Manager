@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
-//@Component
+@Component
 public class DataSeedingListener implements CommandLineRunner {
     @Autowired
     private RoleRepository roleRepository;
@@ -45,7 +45,7 @@ public class DataSeedingListener implements CommandLineRunner {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    private String currentDirectory = System.getProperty("user.dir");
     @Override
     public void run(String... args) throws Exception {
         // Role
@@ -74,7 +74,7 @@ public class DataSeedingListener implements CommandLineRunner {
         if (accountTypeRepository.findByName("Basic") == null)
             accountTypeRepository.save(new AccountType("Basic"));
         // Bank Account
-        String urlAcc = "accountNumber.txt";
+        String urlAcc = currentDirectory + "\\src\\main\\resources\\accountNumber.txt";
         FileInputStream fileInputStream = new FileInputStream(urlAcc);
         Scanner scanner = new Scanner(fileInputStream);
 
@@ -144,7 +144,7 @@ public class DataSeedingListener implements CommandLineRunner {
             limitCreditCardRepository.save(limitCreditCard);
         }
         // list visa card
-        String urlVisa = "visaFull.txt";
+        String urlVisa = currentDirectory + "\\src\\main\\resources\\visaFull.txt";
         FileInputStream fileInputStreamVisa = new FileInputStream(urlVisa);
         Scanner scanner2 = new Scanner(fileInputStreamVisa);
 
