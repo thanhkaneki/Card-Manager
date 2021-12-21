@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
-//@Component
+@Component
 public class DataSeedingListener implements CommandLineRunner {
     @Autowired
     private RoleRepository roleRepository;
