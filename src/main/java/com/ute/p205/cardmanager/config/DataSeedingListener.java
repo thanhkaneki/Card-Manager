@@ -74,7 +74,7 @@ public class DataSeedingListener implements CommandLineRunner {
         if (accountTypeRepository.findByName("Basic") == null)
             accountTypeRepository.save(new AccountType("Basic"));
         // Bank Account
-        String urlAcc = "E:\\TMDT\\data\\accountNumber.txt";
+        String urlAcc = "accountNumber.txt";
         FileInputStream fileInputStream = new FileInputStream(urlAcc);
         Scanner scanner = new Scanner(fileInputStream);
 
@@ -144,7 +144,7 @@ public class DataSeedingListener implements CommandLineRunner {
             limitCreditCardRepository.save(limitCreditCard);
         }
         // list visa card
-        String urlVisa = "E:\\TMDT\\data\\visaFull.txt";
+        String urlVisa = "visaFull.txt";
         FileInputStream fileInputStreamVisa = new FileInputStream(urlVisa);
         Scanner scanner2 = new Scanner(fileInputStreamVisa);
 
