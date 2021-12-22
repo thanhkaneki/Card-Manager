@@ -1,10 +1,7 @@
 package com.ute.p205.cardmanager.model;
-
 import lombok.*;
-
 import javax.persistence.*;
 import java.sql.Date;
-
 @Entity
 @Table(name = "Account")
 @NoArgsConstructor
@@ -28,7 +25,7 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "type_id", nullable = false)
     private AccountType accountType;
-
+    
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
     private AccountStatus accountStatus;
