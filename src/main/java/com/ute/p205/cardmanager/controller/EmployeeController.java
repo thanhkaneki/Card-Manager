@@ -45,7 +45,6 @@ public class EmployeeController {
 
     @Autowired
     private TypeOfMoneyRepository typeOfMoneyRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 //    @Autowired
