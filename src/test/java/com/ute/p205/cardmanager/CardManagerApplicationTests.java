@@ -9,5 +9,4 @@ class CardManagerApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

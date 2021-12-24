@@ -24,6 +24,7 @@ public class LimitCreditCard {
 
     @OneToMany(mappedBy = "limitCreditCard", cascade = CascadeType.ALL)
     private Set<Card> cards;
-
-
 }
+
+
+

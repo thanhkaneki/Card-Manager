@@ -22,10 +22,11 @@ public class Role {
 
     @ManyToMany(mappedBy = "sysRoles")
     private Set<Customer> accounts = new HashSet<>();
-
 }
 /*CREATE TABLE SysRoles(
 	ID int NOT NULL PRIMARY KEY,
 	Role VARCHAR(12) NOT NULL
 );
 );*/
+
+

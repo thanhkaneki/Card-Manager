@@ -35,7 +35,6 @@ public class CustomerInfo {
     @NonNull private String phoneNumber;
     @Column(name = "Email")
     @NonNull private String email;
-
 }
 /*CREATE TABLE SysAccountInfo(
 	User_ID int not null primary key,

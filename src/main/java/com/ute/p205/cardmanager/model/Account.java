@@ -25,7 +25,7 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "type_id", nullable = false)
     private AccountType accountType;
-    
+
     @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
     private AccountStatus accountStatus;
