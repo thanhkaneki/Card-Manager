@@ -6,3 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface LimitCreditCardRepository extends JpaRepository<LimitCreditCard, Long> {
     LimitCreditCard findByLimitMoney(String limitMoney);
 }
+
+
+
+
