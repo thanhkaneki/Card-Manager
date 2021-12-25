@@ -6,3 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CardTypeRepository extends JpaRepository<CardType, Long> {
     CardType findByName(String name);
 }
+
+
