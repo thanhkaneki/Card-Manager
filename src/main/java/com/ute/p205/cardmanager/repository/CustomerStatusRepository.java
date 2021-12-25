@@ -12,3 +12,6 @@ public interface CustomerStatusRepository extends CrudRepository<CustomerStatus,
     List<CustomerStatus> findAll();
     CustomerStatus findByStatus(@Param("status") String status);
 }
+  
+
+
